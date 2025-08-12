@@ -8,3 +8,6 @@ body { margin:0; font-family: Inter, system-ui, Arial; background:#0b1020; color
 .input { width:100%; background:#0f1724; color:#e6eef8 }
 .button { background:#2563eb; color:white; cursor:pointer }
 .card { background:#061223; padding:12px; margin-bottom:12px; border-radius:8px }
+.legend { display:flex; gap:8px; flex-wrap:wrap; font-size:12px; margin-top:8px }
+.legend span { display:inline-flex; align-items:center; gap:4px }
+.legend i { width:14px; height:14px; border-radius:3px; display:inline-block }

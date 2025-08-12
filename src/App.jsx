@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { fetchRepoContents, parseOwnerRepo } from './api/github.js';
 import { analyzeFiles } from './analysis/analyze.js';
 import { ThreeScene } from './components/ThreeScene.jsx';
@@ -11,6 +11,7 @@ function App() {
   const [nodes, setNodes] = useState([]);
   const [links, setLinks] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [query, setQuery] = useState('');
 
   const runAnalysis = useCallback(async (overrideUrl) => {
     setStatus('loading');
@@ -35,6 +36,12 @@ function App() {
       setStatus('error');
     }
   }, [url, token]);
+
+  const filteredNodes = useMemo(() => {
+    if (!query.trim()) return nodes;
+    const q = query.toLowerCase();
+    return nodes.filter(n => n.path.toLowerCase().includes(q));
+  }, [nodes, query]);
 
   return (
     <div className="app">
@@ -74,11 +81,20 @@ function App() {
             </div>
           ) : <p>Click a building in the 3D view</p>}
         </div>
+        <div className="card">
+          <h4>Legend</h4>
+          <div className="legend">
+            <span><i style={{background:'#60a5fa'}} /> Low complexity</span>
+            <span><i style={{background:'#facc15'}} /> Medium</span>
+            <span><i style={{background:'#ff6b6b'}} /> High</span>
+          </div>
+          <small>Height = LOC (log scale)</small>
+        </div>
         <div style={{ height:40 }} />
         <small>Built as an MVP — improve parsing & backend for more depth.</small>
       </div>
       <div className="canvasWrap">
-        <ThreeScene nodes={nodes} links={links} onFocus={d => setSelected(d || null)} />
+        <ThreeScene nodes={filteredNodes} links={links} onFocus={d => setSelected(d || null)} />
       </div>
     </div>
   );
