@@ -1,0 +1,10 @@
+body { margin:0; font-family: Inter, system-ui, Arial; background:#0b1020; color:#e6eef8 }
+#root { height:100vh }
+.app { display:flex; height:100vh }
+.sidebar { width:360px; padding:16px; background:#07101a; overflow:auto }
+.canvasWrap { flex:1; position:relative }
+.controls { display:flex; gap:8px; margin-top:8px }
+.input, button { padding:8px 12px; border-radius:6px; border:none }
+.input { width:100%; background:#0f1724; color:#e6eef8 }
+.button { background:#2563eb; color:white; cursor:pointer }
+.card { background:#061223; padding:12px; margin-bottom:12px; border-radius:8px }
